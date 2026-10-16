@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="50%" stop-color="#6366F1" />
+      <stop offset="100%" stop-color="#818CF8" />
+    </linearGradient>
+    <linearGradient id="discGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E1B4B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#312E81" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Background rounded squircle (Apple style) -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
+
+  <!-- Vinyl Record with aux / fair turn ring -->
+  <g filter="url(#shadow)">
+    <!-- Vinyl base -->
+    <circle cx="256" cy="256" r="176" fill="url(#discGrad)"/>
+    <!-- Grooves -->
+    <circle cx="256" cy="256" r="148" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="16 8" opacity="0.6"/>
+    <circle cx="256" cy="256" r="124" fill="none" stroke="#475569" stroke-width="1.5" opacity="0.5"/>
+    <circle cx="256" cy="256" r="100" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="12 6" opacity="0.5"/>
+
+    <!-- Center Label (Electric Indigo) -->
+    <circle cx="256" cy="256" r="68" fill="#6366F1"/>
+    <circle cx="256" cy="256" r="62" fill="none" stroke="#EEF2FF" stroke-width="2" opacity="0.8"/>
+
+    <!-- Center hole -->
+    <circle cx="256" cy="256" r="18" fill="#FFFFFF"/>
+    <circle cx="256" cy="256" r="8" fill="#1E1B4B"/>
+  </g>
+
+  <!-- Circular Round-Robin Turn Indicator Arrows around disc -->
+  <path d="M 256 36 A 220 220 0 0 1 476 256" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-dasharray="80 28" opacity="0.85"/>
+  <polygon points="484,244 476,270 464,248" fill="#FFFFFF"/>
+
+  <path d="M 256 476 A 220 220 0 0 1 36 256" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-dasharray="80 28" opacity="0.85"/>
+  <polygon points="28,268 36,242 48,264" fill="#FFFFFF"/>
+
+  <!-- Aux plug badge in corner -->
+  <g transform="translate(330, 330)">
+    <circle cx="48" cy="48" r="44" fill="#FFFFFF" filter="url(#shadow)"/>
+    <!-- Aux cable head -->
+    <rect x="42" y="22" width="12" height="34" rx="4" fill="#4F46E5"/>
+    <rect x="45" y="56" width="6" height="18" rx="2" fill="#94A3B8"/>
+    <line x1="48" y1="56" x2="48" y2="76" stroke="#64748B" stroke-width="2"/>
+    <circle cx="48" cy="76" r="2.5" fill="#4F46E5"/>
+  </g>
+</svg>

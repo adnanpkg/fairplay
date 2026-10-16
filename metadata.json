@@ -1,0 +1,6 @@
+{
+  "name": "FairPlay - Fair Music Queue",
+  "description": "A real-time Progressive Web App for road trips and parties with strict round-robin aux turns and track length caps.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
