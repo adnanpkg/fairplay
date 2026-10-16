@@ -15,6 +15,7 @@ import { JoinRoomView } from './components/JoinRoomView';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { Room, SearchTrackResult } from './types/fairplay';
 import { useHaptics } from './hooks/useHaptics';
+import { API_BASE } from './config/api';
 
 const STORAGE_KEY = 'fairplay_session_v1';
 
@@ -68,7 +69,7 @@ export default function App() {
 
   const fetchRoomState = async (code: string, currentPid?: string) => {
     try {
-      const res = await fetch(`/api/rooms/${code}`);
+      const res = await fetch(`${API_BASE}/api/rooms/${code}`);
       const data = await res.json();
       if (data.success && data.room) {
         setRoom(data.room);
@@ -90,7 +91,7 @@ export default function App() {
       eventSourceRef.current.close();
     }
 
-    const es = new EventSource(`/api/rooms/${code}/events`);
+    const es = new EventSource(`${API_BASE}/api/rooms/${code}/events`);
     eventSourceRef.current = es;
 
     es.onmessage = (event) => {
@@ -128,7 +129,7 @@ export default function App() {
 
   // 3. Create Room (Host)
   const handleCreateRoom = async (hostNickname: string, sessionName: string, capSeconds: number) => {
-    const res = await fetch('/api/rooms', {
+    const res = await fetch(`${API_BASE}/api/rooms`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ hostNickname, sessionName, maxDurationCapSeconds: capSeconds }),
@@ -149,7 +150,7 @@ export default function App() {
   // 4. Join Room (Guest)
   const handleJoinRoom = async (code: string, nickname: string, avatar: string) => {
     try {
-      const res = await fetch(`/api/rooms/${code}/join`, {
+      const res = await fetch(`${API_BASE}/api/rooms/${code}/join`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nickname, avatar }),
@@ -178,7 +179,7 @@ export default function App() {
     if (!room) return { success: false, error: 'No active room' };
 
     try {
-      const res = await fetch(`/api/rooms/${room.code}/queue`, {
+      const res = await fetch(`${API_BASE}/api/rooms/${room.code}/queue`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ playerId: myPlayerId, track }),
@@ -200,7 +201,7 @@ export default function App() {
   const handlePlaybackAction = async (action: 'play' | 'pause' | 'next' | 'previous' | 'seek', positionMs?: number) => {
     if (!room) return;
     try {
-      const res = await fetch(`/api/rooms/${room.code}/playback/action`, {
+      const res = await fetch(`${API_BASE}/api/rooms/${room.code}/playback/action`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ playerId: myPlayerId, action, positionMs }),
@@ -218,7 +219,7 @@ export default function App() {
   const handleCastVeto = async () => {
     if (!room) return;
     try {
-      const res = await fetch(`/api/rooms/${room.code}/veto`, {
+      const res = await fetch(`${API_BASE}/api/rooms/${room.code}/veto`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ playerId: myPlayerId }),
@@ -239,7 +240,7 @@ export default function App() {
   const handlePassTurn = async () => {
     if (!room) return;
     try {
-      const res = await fetch(`/api/rooms/${room.code}/pass-turn`, {
+      const res = await fetch(`${API_BASE}/api/rooms/${room.code}/pass-turn`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ playerId: myPlayerId }),
@@ -258,7 +259,7 @@ export default function App() {
   const handleUpdateSettings = async (settings: { maxDurationCapSeconds: number; vetoBudget: number; name: string }) => {
     if (!room) return;
     try {
-      const res = await fetch(`/api/rooms/${room.code}/settings`, {
+      const res = await fetch(`${API_BASE}/api/rooms/${room.code}/settings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ hostId: myPlayerId, ...settings }),
@@ -277,7 +278,7 @@ export default function App() {
   const handleSimulatePassenger = async () => {
     if (!room) return;
     try {
-      const res = await fetch(`/api/rooms/${room.code}/simulate-passenger`, {
+      const res = await fetch(`${API_BASE}/api/rooms/${room.code}/simulate-passenger`, {
         method: 'POST',
       });
       const data = await res.json();
@@ -294,7 +295,7 @@ export default function App() {
   const handleRemoveTrack = async (trackId: string) => {
     if (!room) return;
     try {
-      const res = await fetch(`/api/rooms/${room.code}/queue/${trackId}`, {
+      const res = await fetch(`${API_BASE}/api/rooms/${room.code}/queue/${trackId}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ hostId: myPlayerId }),
@@ -312,7 +313,7 @@ export default function App() {
   const handleDisconnectSpotify = async () => {
     if (!room) return;
     try {
-      const res = await fetch('/api/spotify/disconnect', {
+      const res = await fetch(`${API_BASE}/api/spotify/disconnect`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ roomCode: room.code, hostId: myPlayerId }),

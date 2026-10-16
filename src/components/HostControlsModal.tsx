@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { Room } from '../types/fairplay';
 import { useHaptics } from '../hooks/useHaptics';
+import { API_BASE } from '../config/api';
 
 interface HostControlsModalProps {
   room: Room;
@@ -76,7 +77,7 @@ export const HostControlsModal: React.FC<HostControlsModalProps> = ({
 
   const handleSpotifyConnect = () => {
     haptics.mediumTap();
-    window.location.href = `/api/spotify/login?roomCode=${encodeURIComponent(room.code)}`;
+    window.location.href = `${API_BASE}/api/spotify/login?roomCode=${encodeURIComponent(room.code)}`;
   };
 
   const handleCopyRedirect = () => {

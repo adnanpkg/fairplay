@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { Track, SearchTrackResult } from '../types/fairplay';
 import { useHaptics } from '../hooks/useHaptics';
+import { API_BASE } from '../config/api';
 
 interface SearchSongModalProps {
   isOpen: boolean;
@@ -73,7 +74,7 @@ export const SearchSongModal: React.FC<SearchSongModalProps> = ({
     setIsLoading(true);
     setErrorMsg(null);
     try {
-      const res = await fetch(`/api/music/search?q=${encodeURIComponent(term)}`);
+      const res = await fetch(`${API_BASE}/api/music/search?q=${encodeURIComponent(term)}`);
       const data = await res.json();
       setResults(data.results || []);
     } catch {
